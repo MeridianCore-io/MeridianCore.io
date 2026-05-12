@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>TheMrLurker — MeridianCore.io</title>
+  <meta name="description" content="Automated Twitch session manager. Background drops farming, bonus claiming, and anti-raid routing from a single browser extension popup."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --cu: #C17F3E; --sv: #C0C0C0; --bg: #0d1117; --white: #F8F8F6;
+      --card: rgba(255,255,255,0.025); --border: rgba(255,255,255,0.07);
+    }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--white); font-family:'Space Grotesk',sans-serif; line-height:1.6; }
+    .container { max-width:1120px; margin:0 auto; padding:0 32px; }
+    em { font-style:normal; color:var(--cu); }
+
+    /* Nav */
+    .nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; background:rgba(13,17,23,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.05); transition:all .3s; }
+    .nav-logo { font-size:18px; font-weight:800; color:var(--white); text-decoration:none; letter-spacing:-.02em; }
+    .nav-logo span { color:var(--cu); }
+    .nav-back { font-size:13px; color:rgba(248,248,246,0.5); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color .2s; }
+    .nav-back:hover { color:var(--white); }
+
+    /* Hero */
+    .proj-hero { padding:160px 0 80px; border-bottom:1px solid var(--border); }
+    .proj-meta { display:flex; gap:12px; align-items:center; margin-bottom:24px; flex-wrap:wrap; }
+    .proj-tag { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(248,248,246,0.4); padding:4px 12px; border:1px solid var(--border); border-radius:20px; }
+    .proj-status { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 12px; border-radius:20px; color:#22C55E; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); }
+    .proj-title { font-size:clamp(40px,7vw,80px); font-weight:800; letter-spacing:-.03em; line-height:1.05; margin-bottom:20px; }
+    .proj-sub { font-size:18px; line-height:1.7; color:rgba(248,248,246,0.6); max-width:640px; margin-bottom:40px; }
+    .proj-actions { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:14px; font-weight:600; text-decoration:none; transition:all .25s; }
+    .btn-primary { background:var(--cu); color:#000; }
+    .btn-primary:hover { background:#d4913d; transform:translateY(-1px); }
+    .btn-ghost { border:1px solid var(--border); color:var(--white); }
+    .btn-ghost:hover { border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.04); }
+    .btn-disabled { border:1px solid var(--border); color:rgba(248,248,246,0.3); cursor:not-allowed; }
+
+    /* Stat bar */
+    .stat-bar { display:flex; gap:40px; flex-wrap:wrap; padding:40px 0; border-bottom:1px solid var(--border); }
+    .stat-item { display:flex; flex-direction:column; gap:4px; }
+    .stat-val { font-size:28px; font-weight:800; color:var(--white); }
+    .stat-lbl { font-size:12px; color:rgba(248,248,246,0.4); letter-spacing:.05em; }
+
+    /* Content sections */
+    .proj-content { padding:80px 0; }
+    .content-grid { display:grid; grid-template-columns:1fr 360px; gap:64px; align-items:start; }
+    @media(max-width:900px){ .content-grid{ grid-template-columns:1fr; } }
+
+    .prose h2 { font-size:26px; font-weight:700; margin:48px 0 16px; color:var(--white); }
+    .prose h2:first-child { margin-top:0; }
+    .prose p { font-size:15px; line-height:1.75; color:rgba(248,248,246,0.65); margin-bottom:16px; }
+    .prose ul { padding-left:20px; margin-bottom:16px; }
+    .prose li { font-size:15px; line-height:1.75; color:rgba(248,248,246,0.65); margin-bottom:6px; }
+    .prose li::marker { color:var(--cu); }
+
+    /* Sidebar */
+    .sidebar { display:flex; flex-direction:column; gap:24px; position:sticky; top:100px; }
+    .sidebar-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; }
+    .sidebar-card h4 { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(248,248,246,0.35); margin-bottom:16px; }
+    .tech-list { display:flex; flex-direction:column; gap:8px; }
+    .tech-item { display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(248,248,246,0.7); }
+    .tech-dot { width:6px; height:6px; border-radius:50%; background:var(--cu); flex-shrink:0; }
+    .feature-list { display:flex; flex-direction:column; gap:10px; }
+    .feature-item { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:rgba(248,248,246,0.7); line-height:1.5; }
+    .feature-check { color:var(--cu); flex-shrink:0; margin-top:1px; }
+    .version-badge { text-align:center; padding:16px; background:rgba(193,127,62,0.08); border:1px solid rgba(193,127,62,0.2); border-radius:12px; }
+    .version-badge .v { font-size:36px; font-weight:800; color:var(--cu); }
+    .version-badge .vl { font-size:12px; color:rgba(248,248,246,0.4); margin-top:4px; }
+
+    /* Tab UI mockup */
+    .mockup { background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin:32px 0; }
+    .mockup-bar { background:rgba(255,255,255,0.04); padding:10px 16px; display:flex; gap:8px; align-items:center; border-bottom:1px solid var(--border); }
+    .mock-dot { width:10px; height:10px; border-radius:50%; }
+    .mock-title { font-size:11px; color:rgba(248,248,246,0.4); margin-left:8px; letter-spacing:.04em; }
+    .mockup-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); }
+    .mtab { flex:1; text-align:center; padding:10px 8px; font-size:11px; font-weight:600; color:rgba(248,248,246,0.4); cursor:default; letter-spacing:.06em; text-transform:uppercase; }
+    .mtab.active { color:var(--cu); border-bottom:2px solid var(--cu); background:rgba(193,127,62,0.05); }
+    .mockup-body { padding:20px; }
+    .mock-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:13px; }
+    .mock-key { color:rgba(248,248,246,0.4); }
+    .mock-val { color:var(--white); font-weight:600; }
+    .mock-val.green { color:#22C55E; }
+    .mock-val.cu { color:var(--cu); }
+
+    /* Footer */
+    .proj-footer { padding:48px 0; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+    .proj-footer a { font-size:14px; color:rgba(248,248,246,0.5); text-decoration:none; transition:color .2s; }
+    .proj-footer a:hover { color:var(--white); }
+    .pf-nav { display:flex; gap:32px; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">MeridianCore<span>.io</span></a>
+  <a class="nav-back" href="../index.html#products">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Vault
+  </a>
+</nav>
+
+<main>
+  <section class="proj-hero">
+    <div class="container">
+      <div class="proj-meta">
+        <div class="proj-tag">Browser Extension</div>
+        <div class="proj-tag">Manifest V3</div>
+        <div class="proj-status">Active</div>
+      </div>
+      <h1 class="proj-title">TheMr<em>Lurker</em></h1>
+      <p class="proj-sub">Automated Twitch session manager built for background efficiency. Drops farming, bonus claiming, anti-raid routing, and quality control &mdash; running silently while you do everything else.</p>
+      <div class="proj-actions">
+        <a href="#" class="btn btn-disabled">Coming to Chrome Web Store</a>
+        <a href="#features" class="btn btn-ghost">See Features</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="stat-bar">
+      <div class="stat-item"><div class="stat-val">v5.5</div><div class="stat-lbl">Current Version</div></div>
+      <div class="stat-item"><div class="stat-val">4</div><div class="stat-lbl">Popup Tabs</div></div>
+      <div class="stat-item"><div class="stat-val">3</div><div class="stat-lbl">Browsers Supported</div></div>
+      <div class="stat-item"><div class="stat-val">0</div><div class="stat-lbl">Cloud Dependencies</div></div>
+    </div>
+  </div>
+
+  <section class="proj-content" id="features">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <h2>What it does</h2>
+          <p>TheMrLurker runs in the background of Chrome, Edge, or Firefox as a Manifest V3 extension. Open the popup, point it at a channel or campaign list, and it handles the session from there &mdash; no babysitting required.</p>
+          <p>The core use case is Twitch Drops: staying connected to streams long enough to claim time-based rewards. TheMrLurker manages that connection automatically, handles the claim step when drops complete, and moves to the next campaign in your queue without intervention.</p>
+
+          <h2>Session Management</h2>
+          <p>Sessions are time-bounded and configurable. Set a per-session limit, define a squad (list of favorite channels to prefer), and the extension handles rotation when streams go offline or raids redirect you somewhere you didn&rsquo;t ask to go. Anti-raid routing keeps you on the channels you chose, not wherever the streamer decided to send their audience.</p>
+
+          <h2>Popup Interface</h2>
+          <div class="mockup">
+            <div class="mockup-bar">
+              <div class="mock-dot" style="background:#ef4444;opacity:.5"></div>
+              <div class="mock-dot" style="background:#eab308;opacity:.5"></div>
+              <div class="mock-dot" style="background:#22c55e;opacity:.5"></div>
+              <span class="mock-title">TheMrLurker v5.5</span>
+            </div>
+            <div class="mockup-tabs">
+              <div class="mtab active">Current</div>
+              <div class="mtab">Dashboard</div>
+              <div class="mtab">Stats</div>
+              <div class="mtab">Drops</div>
+            </div>
+            <div class="mockup-body">
+              <div class="mock-row"><span class="mock-key">Channel</span><span class="mock-val green">● live_stream_example</span></div>
+              <div class="mock-row"><span class="mock-key">Session Time</span><span class="mock-val">01:42:18</span></div>
+              <div class="mock-row"><span class="mock-key">Quality</span><span class="mock-val">160p (auto)</span></div>
+              <div class="mock-row"><span class="mock-key">Drops Progress</span><span class="mock-val cu">68%</span></div>
+              <div class="mock-row"><span class="mock-key">Anti-Raid</span><span class="mock-val green">Active</span></div>
+              <div class="mock-row" style="border:none"><span class="mock-key">Next in Queue</span><span class="mock-val" style="color:rgba(248,248,246,0.4)">2 campaigns</span></div>
+            </div>
+          </div>
+          <p>The <strong>Current</strong> tab shows active session state. <strong>Dashboard</strong> manages your squad list and campaign queue. <strong>Stats</strong> tracks historical drop claims and session hours. The <strong>Drops</strong> tab browses active campaigns directly via the Twitch GQL API &mdash; no external site required.</p>
+
+          <h2>Quality Control</h2>
+          <p>Stream quality is auto-set to the lowest available option (typically 160p). You&rsquo;re not watching the stream &mdash; you&rsquo;re farming drops. Reducing quality reduces bandwidth consumption for a session that may run for hours. This is configurable if you want to set a minimum quality floor.</p>
+
+          <h2>Technical Notes</h2>
+          <p>Built entirely in vanilla JavaScript with no build system, no bundler, and no external runtime dependencies. The extension communicates with Twitch&rsquo;s GQL API directly for campaign data. All session state is stored locally in the browser&rsquo;s extension storage &mdash; nothing leaves your machine.</p>
+          <p>Manifest V3 compliance means the extension uses a service worker background script rather than a persistent background page, in line with current Chrome Web Store requirements.</p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="version-badge sidebar-card">
+            <div class="v">v5.5</div>
+            <div class="vl">HANDOFF-MLK-001 complete</div>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Stack</h4>
+            <div class="tech-list">
+              <div class="tech-item"><div class="tech-dot"></div>Vanilla JavaScript (ES2020+)</div>
+              <div class="tech-item"><div class="tech-dot"></div>Manifest V3 / Service Worker</div>
+              <div class="tech-item"><div class="tech-dot"></div>Twitch GQL API</div>
+              <div class="tech-item"><div class="tech-dot"></div>Chrome Storage API</div>
+              <div class="tech-item"><div class="tech-dot"></div>No build system</div>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Browsers</h4>
+            <div class="tech-list">
+              <div class="tech-item"><div class="tech-dot"></div>Chrome</div>
+              <div class="tech-item"><div class="tech-dot"></div>Microsoft Edge</div>
+              <div class="tech-item"><div class="tech-dot"></div>Firefox</div>
+            </div>
+          </div>
+
+          <div class="sidebar-card" id="features">
+            <h4>Features</h4>
+            <div class="feature-list">
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Background drops farming</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Automatic bonus claiming</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Anti-raid routing</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Quality auto-set (160p)</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Session timeout limits</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Squad / favorites list</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Campaign queue browser</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Historical stats tracking</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> No cloud dependency</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="proj-footer">
+      <a href="../index.html">&#8592; MeridianCore.io</a>
+      <div class="pf-nav">
+        <a href="keyspeak.html">KeySpeak &#8594;</a>
+        <a href="waymark.html">Waymark &#8594;</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.set(['.proj-meta','.proj-title','.proj-sub','.proj-actions','.stat-bar'], { opacity:0, y:24 });
+gsap.timeline({ delay:.1 })
+  .to('.proj-meta',    { opacity:1, y:0, duration:.5, ease:'power2.out' })
+  .to('.proj-title',   { opacity:1, y:0, duration:.65, ease:'power2.out' }, '-=.3')
+  .to('.proj-sub',     { opacity:1, y:0, duration:.55, ease:'power2.out' }, '-=.35')
+  .to('.proj-actions', { opacity:1, y:0, duration:.5, ease:'power2.out' }, '-=.3')
+  .to('.stat-bar',     { opacity:1, y:0, duration:.5, ease:'power2.out' }, '-=.25');
+
+gsap.utils.toArray('.sidebar-card, .mockup, .prose h2').forEach((el,i)=>{
+  gsap.from(el,{
+    scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' },
+    opacity:0, y:20, duration:.6, delay:i*.03, ease:'power2.out'
+  });
+});
+</script>
+</body>
+</html>

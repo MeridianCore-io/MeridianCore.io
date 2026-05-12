@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Waymark — MeridianCore.io</title>
+  <meta name="description" content="Waymark: full-stack training delivery platform for small business facilitators. Live quizzing, SCORM module import, roster management, and session scoring — without the LMS price tag."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root { --cu:#C17F3E; --sv:#C0C0C0; --bg:#0d1117; --white:#F8F8F6; --card:rgba(255,255,255,0.025); --border:rgba(255,255,255,0.07); }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--white); font-family:'Space Grotesk',sans-serif; line-height:1.6; }
+    .container { max-width:1120px; margin:0 auto; padding:0 32px; }
+    em { font-style:normal; color:var(--cu); }
+    .nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; background:rgba(13,17,23,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.05); }
+    .nav-logo { font-size:18px; font-weight:800; color:var(--white); text-decoration:none; letter-spacing:-.02em; }
+    .nav-logo span { color:var(--cu); }
+    .nav-back { font-size:13px; color:rgba(248,248,246,0.5); text-decoration:none; display:flex; align-items:center; gap:6px; transition:color .2s; }
+    .nav-back:hover { color:var(--white); }
+    .proj-hero { padding:160px 0 80px; border-bottom:1px solid var(--border); }
+    .proj-meta { display:flex; gap:12px; align-items:center; margin-bottom:24px; flex-wrap:wrap; }
+    .proj-tag { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(248,248,246,0.4); padding:4px 12px; border:1px solid var(--border); border-radius:20px; }
+    .proj-status-beta { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 12px; border-radius:20px; color:#C17F3E; background:rgba(193,127,62,0.1); border:1px solid rgba(193,127,62,0.3); }
+    .proj-title { font-size:clamp(40px,7vw,80px); font-weight:800; letter-spacing:-.03em; line-height:1.05; margin-bottom:20px; }
+    .proj-sub { font-size:18px; line-height:1.7; color:rgba(248,248,246,0.6); max-width:640px; margin-bottom:40px; }
+    .proj-actions { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn { display:inline-flex; align-items:center; gap:8px; padding:14px 28px; border-radius:100px; font-size:14px; font-weight:600; text-decoration:none; transition:all .25s; }
+    .btn-primary { background:var(--cu); color:#000; }
+    .btn-primary:hover { background:#d4913d; transform:translateY(-1px); }
+    .btn-ghost { border:1px solid var(--border); color:var(--white); }
+    .btn-ghost:hover { border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.04); }
+    .btn-disabled { border:1px solid var(--border); color:rgba(248,248,246,0.3); cursor:not-allowed; }
+    .stat-bar { display:flex; gap:40px; flex-wrap:wrap; padding:40px 0; border-bottom:1px solid var(--border); }
+    .stat-item { display:flex; flex-direction:column; gap:4px; }
+    .stat-val { font-size:28px; font-weight:800; color:var(--white); }
+    .stat-lbl { font-size:12px; color:rgba(248,248,246,0.4); letter-spacing:.05em; }
+    .proj-content { padding:80px 0; }
+    .content-grid { display:grid; grid-template-columns:1fr 360px; gap:64px; align-items:start; }
+    @media(max-width:900px){ .content-grid{ grid-template-columns:1fr; } }
+    .prose h2 { font-size:26px; font-weight:700; margin:48px 0 16px; color:var(--white); }
+    .prose h2:first-child { margin-top:0; }
+    .prose p { font-size:15px; line-height:1.75; color:rgba(248,248,246,0.65); margin-bottom:16px; }
+    .prose ul { padding-left:20px; margin-bottom:16px; }
+    .prose li { font-size:15px; line-height:1.75; color:rgba(248,248,246,0.65); margin-bottom:6px; }
+    .prose li::marker { color:var(--cu); }
+    .sidebar { display:flex; flex-direction:column; gap:24px; position:sticky; top:100px; }
+    .sidebar-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; }
+    .sidebar-card h4 { font-size:12px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(248,248,246,0.35); margin-bottom:16px; }
+    .tech-list { display:flex; flex-direction:column; gap:8px; }
+    .tech-item { display:flex; align-items:center; gap:10px; font-size:14px; color:rgba(248,248,246,0.7); }
+    .tech-dot { width:6px; height:6px; border-radius:50%; background:var(--cu); flex-shrink:0; }
+    .feature-list { display:flex; flex-direction:column; gap:10px; }
+    .feature-item { display:flex; gap:10px; align-items:flex-start; font-size:14px; color:rgba(248,248,246,0.7); line-height:1.5; }
+    .feature-check { color:var(--cu); flex-shrink:0; margin-top:1px; }
+    .module-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+    .module-card { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:12px; padding:20px; }
+    .module-card.featured { border-color:rgba(193,127,62,0.25); background:rgba(193,127,62,0.05); }
+    .mc-status { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+    .mc-live { color:#22C55E; }
+    .mc-dev { color:#C17F3E; }
+    .mc-planned { color:rgba(248,248,246,0.3); }
+    .module-card h4 { font-size:15px; font-weight:700; color:var(--white); margin-bottom:6px; }
+    .module-card p { font-size:13px; line-height:1.5; color:rgba(248,248,246,0.5); margin:0; }
+    .compare-table { width:100%; border-collapse:collapse; margin:24px 0; }
+    .compare-table th { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(248,248,246,0.35); padding:8px 12px; text-align:left; border-bottom:1px solid var(--border); }
+    .compare-table td { font-size:14px; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,0.04); color:rgba(248,248,246,0.65); }
+    .compare-table tr:last-child td { border:none; }
+    .compare-table .yes { color:#22C55E; font-weight:600; }
+    .compare-table .no { color:rgba(248,248,246,0.25); }
+    .compare-table .hl td { background:rgba(193,127,62,0.05); }
+    .proj-footer { padding:48px 0; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+    .proj-footer a { font-size:14px; color:rgba(248,248,246,0.5); text-decoration:none; transition:color .2s; }
+    .proj-footer a:hover { color:var(--white); }
+    .pf-nav { display:flex; gap:32px; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="../index.html">MeridianCore<span>.io</span></a>
+  <a class="nav-back" href="../index.html#products">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Vault
+  </a>
+</nav>
+
+<main>
+  <section class="proj-hero">
+    <div class="container">
+      <div class="proj-meta">
+        <div class="proj-tag">Web Platform</div>
+        <div class="proj-tag">Training Delivery</div>
+        <div class="proj-status-beta">Beta</div>
+      </div>
+      <h1 class="proj-title">Fac<em>Suite</em></h1>
+      <p class="proj-sub">Full-stack training delivery platform for small business facilitators and independent instructors. Live quizzing, SCORM-compatible course import, real-time session scoring, and roster management &mdash; without the enterprise LMS price tag.</p>
+      <div class="proj-actions">
+        <a href="#modules" class="btn btn-primary">See Modules</a>
+        <a href="#scorm" class="btn btn-ghost">SCORM Support</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="stat-bar">
+      <div class="stat-item"><div class="stat-val">6</div><div class="stat-lbl">Modules</div></div>
+      <div class="stat-item"><div class="stat-val">Live</div><div class="stat-lbl">QuizSuite + MSR</div></div>
+      <div class="stat-item"><div class="stat-val">SCORM</div><div class="stat-lbl">Compatible Import</div></div>
+      <div class="stat-item"><div class="stat-val">Self-Host</div><div class="stat-lbl">Deployment Model</div></div>
+    </div>
+  </div>
+
+  <section class="proj-content" id="modules">
+    <div class="container">
+      <div class="content-grid">
+        <div class="prose">
+          <h2>What it solves</h2>
+          <p>Running instructor-led training without a full LMS means cobbling together a quiz tool, a slide deck, a scoring sheet, and a signup form from four different places. Waymark replaces that stack with a single web platform built specifically for the person running the session &mdash; not the IT department that manages the LMS.</p>
+          <p>The target user is a facilitator at a small business, community organization, or independent training shop who needs to deliver structured training, track participant progress, and optionally import course content they already have from systems like Canvas or other SCORM-compatible LMSs.</p>
+
+          <h2>Modules</h2>
+          <div class="module-grid">
+            <div class="module-card featured">
+              <div class="mc-status mc-live">&#9679; Live</div>
+              <h4>QuizSuite</h4>
+              <p>Real-time question delivery and response collection during live sessions. Results stream back instantly.</p>
+            </div>
+            <div class="module-card featured">
+              <div class="mc-status mc-live">&#9679; Live</div>
+              <h4>MSR Scoring</h4>
+              <p>Maintenance System Readiness scoring tool. Structured evaluation with configurable rubrics.</p>
+            </div>
+            <div class="module-card">
+              <div class="mc-status mc-dev">&#9679; In Dev</div>
+              <h4>DelSuite</h4>
+              <p>Presentation delivery management. Presenter rotation, slide timing, and session flow control.</p>
+            </div>
+            <div class="module-card">
+              <div class="mc-status mc-dev">&#9679; In Dev</div>
+              <h4>RosterSuite</h4>
+              <p>Participant roster management with attendance tracking and role-based access for trainees.</p>
+            </div>
+            <div class="module-card">
+              <div class="mc-status mc-dev">&#9679; In Dev</div>
+              <h4>VoxSuite</h4>
+              <p>Live session audio tools. Voice annotation and session recording for async review.</p>
+            </div>
+            <div class="module-card">
+              <div class="mc-status mc-planned">&#9675; Planned</div>
+              <h4>SCORM Import</h4>
+              <p>Import and deliver SCORM packages exported from Canvas, Moodle, or any standards-compliant LMS.</p>
+            </div>
+          </div>
+
+          <h2 id="scorm">SCORM compatibility</h2>
+          <p>Community colleges, vocational schools, and learning management systems like Canvas export course content as SCORM packages &mdash; a zip file containing HTML, media, and a manifest that describes the course structure. Waymark&rsquo;s SCORM import module reads these packages and makes them deliverable inside a live session.</p>
+          <p>This means a facilitator can take content they already built (or that their institution already has) and run it through Waymark without rebuilding anything. The system handles progress tracking, completion events, and score passback natively.</p>
+          <p>SCORM 1.2 and SCORM 2004 are the target standards. xAPI (Tin Can) support is on the roadmap.</p>
+
+          <h2>Why not just use an LMS?</h2>
+          <table class="compare-table">
+            <thead><tr><th>Factor</th><th>Enterprise LMS</th><th class="hl">Waymark</th></tr></thead>
+            <tbody>
+              <tr><td>Cost</td><td class="no">$$$+ per seat</td><td class="yes">Self-hosted, free</td></tr>
+              <tr><td>Setup time</td><td class="no">Days to weeks</td><td class="yes">Minutes</td></tr>
+              <tr><td>Live session tools</td><td class="no">Bolted on</td><td class="yes">Core feature</td></tr>
+              <tr><td>Facilitator control</td><td class="no">Admin-gated</td><td class="yes">Operator-first</td></tr>
+              <tr><td>SCORM import</td><td class="yes">Yes</td><td class="yes">Yes (in progress)</td></tr>
+              <tr><td>Offline capable</td><td class="no">Cloud only</td><td class="yes">Self-hosted = offline</td></tr>
+            </tbody>
+          </table>
+
+          <h2>Technical foundation</h2>
+          <p>Waymark runs on Node.js with an Express backend, SQLite for storage, and Socket.IO for real-time session communication between the facilitator&rsquo;s dashboard and participant devices. Authentication is JWT-based.</p>
+          <p>The frontend is vanilla HTML, CSS, and JavaScript &mdash; no framework, no build step, fast to load on any device including older hardware that participants might bring to a training session.</p>
+          <p>Deployment target is a self-hosted Linux instance. The platform is designed to run behind a simple nginx proxy and requires no cloud services to operate.</p>
+        </div>
+
+        <aside class="sidebar">
+          <div class="sidebar-card">
+            <h4>Stack</h4>
+            <div class="tech-list">
+              <div class="tech-item"><div class="tech-dot"></div>Node.js + Express</div>
+              <div class="tech-item"><div class="tech-dot"></div>SQLite (better-sqlite3)</div>
+              <div class="tech-item"><div class="tech-dot"></div>Socket.IO (real-time)</div>
+              <div class="tech-item"><div class="tech-dot"></div>JWT authentication</div>
+              <div class="tech-item"><div class="tech-dot"></div>Vanilla HTML/CSS/JS</div>
+              <div class="tech-item"><div class="tech-dot"></div>SCORM 1.2 / 2004</div>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Deployment</h4>
+            <div class="tech-list">
+              <div class="tech-item"><div class="tech-dot"></div>Self-hosted Linux</div>
+              <div class="tech-item"><div class="tech-dot"></div>nginx reverse proxy</div>
+              <div class="tech-item"><div class="tech-dot"></div>No cloud required</div>
+              <div class="tech-item"><div class="tech-dot"></div>AWS EC2 optional</div>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Who it&rsquo;s for</h4>
+            <div class="feature-list">
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Small business trainers</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Independent facilitators</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Community college instructors</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Teams reusing Canvas content</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Any org that can&rsquo;t afford an LMS</div>
+            </div>
+          </div>
+
+          <div class="sidebar-card">
+            <h4>Module Status</h4>
+            <div class="feature-list">
+              <div class="feature-item"><span style="color:#22C55E">&#9679;</span> QuizSuite — Live</div>
+              <div class="feature-item"><span style="color:#22C55E">&#9679;</span> MSR Scoring — Live</div>
+              <div class="feature-item"><span style="color:#C17F3E">&#9679;</span> DelSuite — In dev</div>
+              <div class="feature-item"><span style="color:#C17F3E">&#9679;</span> RosterSuite — In dev</div>
+              <div class="feature-item"><span style="color:#C17F3E">&#9679;</span> VoxSuite — Scaffolded</div>
+              <div class="feature-item"><span style="color:rgba(248,248,246,0.25)">&#9675;</span> SCORM Import — Planned</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="proj-footer">
+      <a href="../index.html">&#8592; MeridianCore.io</a>
+      <div class="pf-nav">
+        <a href="the-mr-lurker.html">&#8592; TheMrLurker</a>
+        <a href="keyspeak.html">&#8592; KeySpeak</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+gsap.set(['.proj-meta','.proj-title','.proj-sub','.proj-actions','.stat-bar'], { opacity:0, y:24 });
+gsap.timeline({ delay:.1 })
+  .to('.proj-meta',    { opacity:1, y:0, duration:.5, ease:'power2.out' })
+  .to('.proj-title',   { opacity:1, y:0, duration:.65, ease:'power2.out' }, '-=.3')
+  .to('.proj-sub',     { opacity:1, y:0, duration:.55, ease:'power2.out' }, '-=.35')
+  .to('.proj-actions', { opacity:1, y:0, duration:.5, ease:'power2.out' }, '-=.3')
+  .to('.stat-bar',     { opacity:1, y:0, duration:.5, ease:'power2.out' }, '-=.25');
+gsap.utils.toArray('.sidebar-card, .module-card, .prose h2').forEach((el,i)=>{
+  gsap.from(el,{ scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' }, opacity:0, y:20, duration:.6, delay:i*.03, ease:'power2.out' });
+});
+</script>
+</body>
+</html>

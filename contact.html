@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Contact — MeridianCore.io</title>
+  <meta name="description" content="Get in touch with MeridianCore. Questions about Waymark, KeySpeak, TheMrLurker, or general inquiries — we respond within 48 hours."/>
+  <link rel="canonical" href="https://meridiancore.io/contact"/>
+  <meta name="robots" content="index, follow"/>
+  <meta property="og:title" content="Contact — MeridianCore.io"/>
+  <meta property="og:description" content="Get in touch with MeridianCore. We respond within 48 hours."/>
+  <meta property="og:url" content="https://meridiancore.io/contact"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Display:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+
+  <!--
+  ════════════════════════════════════════════════
+  CONTACT FORM SETUP — Web3Forms (free, no backend)
+  ════════════════════════════════════════════════
+  To activate email delivery to info@meridiancore.io:
+  1. Go to https://web3forms.com
+  2. Enter "info@meridiancore.io" and click "Create Access Key"
+  3. They email you a free access key
+  4. Replace "acf464ea-b7fb-46ad-b754-f7507c1354c0" below with that key
+  5. Done — form submissions will arrive at info@meridiancore.io
+  Free tier: 250 submissions/month, no account required
+  ════════════════════════════════════════════════
+  -->
+
+  <style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#0d1117; --bg-card:#131920; --accent:#C17F3E; --accent-soft:#D4A96A;
+    --silver:#A9A9B8; --white:#F4F4F5; --muted:rgba(244,244,245,0.55);
+    --border:rgba(244,244,245,0.08); --border-accent:rgba(193,127,62,0.3);
+    --glass-bg:rgba(255,255,255,0.04); --shadow-card:0 24px 48px rgba(0,0,0,0.4);
+    --radius-card:20px; --radius-pill:100px;
+    --font-display:'Inter Display','Inter',sans-serif; --font-body:'Inter',sans-serif;
+  }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--white); font-family:var(--font-body); line-height:1.6; }
+  a { text-decoration:none; color:inherit; }
+  em { font-style:normal; color:var(--accent); }
+  .container { max-width:1200px; margin:0 auto; padding:0 40px; }
+  @media(max-width:600px){ .container{ padding:0 20px; } }
+
+  /* Nav */
+  .nav {
+    position:fixed; top:0; left:0; right:0; z-index:1000; height:72px;
+    padding:0 40px; display:flex; align-items:center; justify-content:space-between;
+    background:rgba(13,17,23,0.88); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border); transition:transform .3s;
+  }
+  .nav-logo { display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-size:20px; font-weight:800; letter-spacing:-.02em; }
+  .nav-logo-mark { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,#8a8ea8 0%,var(--accent) 100%); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:18px; color:#000; }
+  .nav-logo span { color:var(--accent); }
+  .nav-back { font-size:14px; font-weight:500; color:var(--muted); display:flex; align-items:center; gap:6px; transition:color .2s; }
+  .nav-back:hover { color:var(--white); }
+
+  /* Gradient text */
+  .gradient-text { background:linear-gradient(135deg,var(--accent) 0%,var(--accent-soft) 50%,var(--white) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .section-label { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); background:rgba(193,127,62,0.12); border:1px solid var(--border-accent); border-radius:var(--radius-pill); padding:5px 14px; margin-bottom:20px; }
+  .section-label::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); display:block; }
+
+  /* Hero */
+  .page-hero { padding:140px 0 80px; border-bottom:1px solid var(--border); }
+  .page-hero h1 { font-family:var(--font-display); font-size:clamp(40px,6vw,72px); font-weight:900; letter-spacing:-.04em; line-height:1.05; margin-bottom:20px; }
+  .page-hero p { font-size:18px; line-height:1.75; color:var(--muted); max-width:560px; }
+
+  /* Contact grid */
+  .contact-section { padding:80px 0 120px; }
+  .contact-grid { display:grid; grid-template-columns:1fr 420px; gap:64px; align-items:start; }
+  @media(max-width:960px){ .contact-grid{ grid-template-columns:1fr; } }
+
+  /* Form */
+  .contact-form-wrap { background:var(--glass-bg); border:1.5px solid var(--border); border-radius:var(--radius-card); padding:40px; box-shadow:var(--shadow-card); }
+  .form-title { font-family:var(--font-display); font-size:22px; font-weight:700; margin-bottom:8px; }
+  .form-sub { font-size:14px; color:var(--muted); margin-bottom:32px; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:600px){ .form-row{ grid-template-columns:1fr; } }
+  .field { display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .field label { font-size:13px; font-weight:600; color:var(--silver); letter-spacing:.04em; }
+  .field input, .field select, .field textarea {
+    background:rgba(255,255,255,0.05); border:1.5px solid var(--border);
+    border-radius:10px; padding:13px 16px;
+    font-size:15px; font-family:var(--font-body); color:var(--white);
+    transition:border-color .25s, background .25s; outline:none; width:100%;
+    -webkit-appearance:none;
+  }
+  .field input::placeholder, .field textarea::placeholder { color:rgba(244,244,245,0.3); }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color:var(--border-accent); background:rgba(193,127,62,0.05);
+  }
+  .field select { cursor:pointer; }
+  .field select option { background:var(--bg-card); color:var(--white); }
+  .field textarea { resize:vertical; min-height:140px; line-height:1.6; }
+  .field-error { font-size:12px; color:#ef4444; display:none; }
+  .field.error input, .field.error textarea { border-color:rgba(239,68,68,0.5); }
+  .field.error .field-error { display:block; }
+  .submit-btn {
+    width:100%; padding:16px; border-radius:var(--radius-pill); border:none; cursor:pointer;
+    background:linear-gradient(135deg,var(--accent) 0%,#8B5A1E 100%);
+    color:#000; font-size:16px; font-weight:700; font-family:var(--font-body);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:filter .25s, transform .25s; position:relative;
+    box-shadow:0 0 0 0.5px rgba(193,127,62,0.4), inset 0 0.5px 0 rgba(255,255,255,0.2);
+  }
+  .submit-btn:hover { filter:brightness(1.1); transform:translateY(-2px); box-shadow:0 8px 32px rgba(193,127,62,0.35), inset 0 0.5px 0 rgba(255,255,255,0.2); }
+  .submit-btn:active { transform:translateY(0); }
+  .submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+  .form-note { font-size:12px; color:var(--silver); text-align:center; margin-top:14px; }
+
+  /* Success state */
+  .form-success {
+    display:none; text-align:center; padding:48px 24px;
+  }
+  .form-success.visible { display:block; }
+  .success-icon { width:64px; height:64px; border-radius:50%; background:rgba(34,197,94,0.12); border:1px solid rgba(34,197,94,0.3); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:#22C55E; }
+  .form-success h3 { font-family:var(--font-display); font-size:24px; font-weight:700; margin-bottom:10px; }
+  .form-success p { font-size:15px; color:var(--muted); line-height:1.7; }
+
+  /* Contact info sidebar */
+  .contact-info { display:flex; flex-direction:column; gap:24px; }
+  .info-card { background:var(--glass-bg); border:1.5px solid var(--border); border-radius:var(--radius-card); padding:28px; transition:border-color .3s; }
+  .info-card:hover { border-color:var(--border-accent); }
+  .info-card-head { display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+  .info-icon { width:40px; height:40px; border-radius:10px; background:rgba(193,127,62,0.1); display:flex; align-items:center; justify-content:center; color:var(--accent); flex-shrink:0; }
+  .info-card h4 { font-size:15px; font-weight:700; color:var(--white); }
+  .info-card p { font-size:14px; color:var(--muted); line-height:1.6; }
+  .info-card a { color:var(--accent); font-weight:600; transition:opacity .2s; }
+  .info-card a:hover { opacity:.8; }
+  .response-time { background:rgba(34,197,94,0.06); border-color:rgba(34,197,94,0.2); }
+  .response-time .info-icon { background:rgba(34,197,94,0.1); color:#22C55E; }
+  .faq-link-card { background:rgba(193,127,62,0.05); border-color:var(--border-accent); text-align:center; }
+  .faq-link-card a { display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-size:14px; font-weight:600; color:var(--accent); }
+  .products-card .product-list { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+  .product-row { display:flex; align-items:center; justify-content:space-between; font-size:14px; }
+  .product-name-link { color:var(--white); font-weight:500; }
+  .product-name-link:hover { color:var(--accent); }
+  .p-status { font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:2px 8px; border-radius:20px; }
+  .ps-live { color:#22C55E; background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.2); }
+  .ps-beta { color:var(--accent); background:rgba(193,127,62,0.1); border:1px solid var(--border-accent); }
+  .ps-dev  { color:var(--silver); background:rgba(255,255,255,0.05); border:1px solid var(--border); }
+
+  /* Footer */
+  .footer { padding:40px 0 24px; border-top:1px solid var(--border); }
+  .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:13px; color:rgba(244,244,245,0.3); }
+  .footer-sig { color:rgba(193,127,62,0.5); }
+
+  /* Reveal animation */
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1 { transition-delay:.1s; }
+  .reveal-delay-2 { transition-delay:.2s; }
+  </style>
+</head>
+<body>
+
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <a class="nav-logo" href="../index.html" aria-label="MeridianCore.io homepage">
+    <div class="nav-logo-mark" aria-hidden="true">M</div>
+    MeridianCore<span>.io</span>
+  </a>
+  <a class="nav-back" href="../index.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M11 7H3M7 3L3 7l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Home
+  </a>
+</nav>
+
+<main>
+
+<section class="page-hero" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="section-label" aria-hidden="true">Contact</div>
+    <h1 id="contact-heading">
+      <span class="gradient-text">Let&rsquo;s talk</span> about<br/>your problem.
+    </h1>
+    <p>Whether you have a question about a product, want to discuss a use case, or just want to see if we have a tool that fits — reach out. We respond to every message.</p>
+  </div>
+</section>
+
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- FORM -->
+      <div>
+        <div class="contact-form-wrap reveal" id="formWrap">
+          <h2 class="form-title">Send a message</h2>
+          <p class="form-sub">We respond within 48 hours on business days. If your message is urgent, subject line it as such.</p>
+
+          <!-- Web3Forms endpoint. Replace acf464ea-b7fb-46ad-b754-f7507c1354c0 with your key from web3forms.com -->
+          <form id="contactForm" novalidate>
+            <input type="hidden" name="access_key" value="acf464ea-b7fb-46ad-b754-f7507c1354c0"/>
+            <input type="hidden" name="subject" value="New message from meridiancore.io"/>
+            <input type="hidden" name="from_name" value="MeridianCore Contact Form"/>
+            <input type="hidden" name="redirect" value="false"/>
+            <!-- Honeypot anti-spam -->
+            <input type="checkbox" name="botcheck" style="display:none"/>
+
+            <div class="form-row">
+              <div class="field" id="field-name">
+                <label for="name">Name <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+                <input type="text" id="name" name="name" placeholder="Your full name" required autocomplete="name"/>
+                <span class="field-error" role="alert">Please enter your name.</span>
+              </div>
+              <div class="field" id="field-email">
+                <label for="email">Email <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email"/>
+                <span class="field-error" role="alert">Please enter a valid email.</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject_topic">
+                <option value="">Select a topic...</option>
+                <option value="Waymark — Training Platform">Waymark — Training Platform</option>
+                <option value="TheMrLurker — Browser Extension">TheMrLurker — Browser Extension</option>
+                <option value="KeySpeak — Dictation Software">KeySpeak — Dictation Software</option>
+                <option value="General Inquiry">General Inquiry</option>
+                <option value="Support / Bug Report">Support / Bug Report</option>
+                <option value="Partnership / Licensing">Partnership / Licensing</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="field" id="field-message">
+              <label for="message">Message <span aria-hidden="true" style="color:var(--accent)">*</span></label>
+              <textarea id="message" name="message" placeholder="Describe your question, use case, or problem. The more detail the better." required></textarea>
+              <span class="field-error" role="alert">Please enter a message.</span>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M15.5 2.5l-13 5 5 2.5 2.5 5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.5 10l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span id="btnText">Send Message</span>
+            </button>
+            <p class="form-note">Your information is never shared or sold. We use it only to respond to your message.</p>
+          </form>
+
+          <!-- Success state -->
+          <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+            <div class="success-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M5 14l6 6L23 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Message sent.</h3>
+            <p>Thanks for reaching out. We&rsquo;ll get back to you at the email you provided within 48 hours on business days.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR INFO -->
+      <aside class="contact-info" aria-label="Contact information">
+
+        <div class="info-card reveal reveal-delay-1">
+          <div class="info-card-head">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="4" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M1 6l9 6 9-6" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h4>Email</h4>
+          </div>
+          <p>For general inquiries, product questions, and support:<br/><a href="mailto:info@meridiancore.io">info@meridiancore.io</a></p>
+        </div>
+
+        <div class="info-card response-time reveal reveal-delay-2">
+          <div class="info-card-head">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h4>Response Time</h4>
+          </div>
+          <p>We respond to all messages within <strong style="color:#22C55E">48 business hours</strong>. Typically much faster. Mark your subject urgent if time-sensitive.</p>
+        </div>
+
+        <div class="info-card products-card reveal reveal-delay-1">
+          <div class="info-card-head">
+            <div class="info-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="1" y="1" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="1" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="11" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="8" height="8" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h4>Products</h4>
+          </div>
+          <div class="product-list">
+            <div class="product-row">
+              <a class="product-name-link" href="products/waymark.html">Waymark</a>
+              <span class="p-status ps-beta">Beta</span>
+            </div>
+            <div class="product-row">
+              <a class="product-name-link" href="products/the-mr-lurker.html">TheMrLurker</a>
+              <span class="p-status ps-live">Active</span>
+            </div>
+            <div class="product-row">
+              <a class="product-name-link" href="products/keyspeak.html">KeySpeak</a>
+              <span class="p-status ps-dev">In Dev</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card faq-link-card reveal reveal-delay-2">
+          <p style="font-size:14px;color:var(--muted);">Looking for quick answers? Check the FAQ first — most common questions are already answered.</p>
+          <a href="../index.html#faq">
+            Browse FAQ
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>&copy; 2026 MeridianCore.io &mdash; All rights reserved.</span>
+      <span class="footer-sig">Built without bloat.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  // ── Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // ── Form submission via Web3Forms
+  const form = document.getElementById('contactForm');
+  const btn = document.getElementById('submitBtn');
+  const btnText = document.getElementById('btnText');
+  const formWrap = document.getElementById('formWrap');
+  const formSuccess = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    // Validate name
+    const nameField = document.getElementById('field-name');
+    const name = document.getElementById('name').value.trim();
+    nameField.classList.toggle('error', !name);
+    if (!name) valid = false;
+
+    // Validate email
+    const emailField = document.getElementById('field-email');
+    const email = document.getElementById('email').value.trim();
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    emailField.classList.toggle('error', !emailOk);
+    if (!emailOk) valid = false;
+
+    // Validate message
+    const msgField = document.getElementById('field-message');
+    const msg = document.getElementById('message').value.trim();
+    msgField.classList.toggle('error', !msg);
+    if (!msg) valid = false;
+
+    if (!valid) return;
+
+    // Check if access key is still placeholder
+    const accessKey = form.querySelector('[name="access_key"]').value;
+    if (accessKey === 'acf464ea-b7fb-46ad-b754-f7507c1354c0') {
+      // Fallback: open mailto
+      const subject = encodeURIComponent(document.getElementById('subject').value || 'Message from meridiancore.io');
+      const body = encodeURIComponent(msg + '\n\nFrom: ' + name + '\nEmail: ' + email);
+      window.location.href = 'mailto:info@meridiancore.io?subject=' + subject + '&body=' + body;
+      return;
+    }
+
+    btn.disabled = true;
+    btnText.textContent = 'Sending...';
+
+    try {
+      const data = new FormData(form);
+      const res = await fetch('https://api.web3forms.com/submit', { method:'POST', body:data });
+      const json = await res.json();
+      if (json.success) {
+        form.style.display = 'none';
+        formSuccess.classList.add('visible');
+        formWrap.querySelector('.form-title').style.display = 'none';
+        formWrap.querySelector('.form-sub').style.display = 'none';
+      } else {
+        throw new Error(json.message);
+      }
+    } catch(err) {
+      btn.disabled = false;
+      btnText.textContent = 'Send Message';
+      alert('Something went wrong. Please email us directly at info@meridiancore.io');
+    }
+  });
+
+  // Clear field errors on input
+  document.querySelectorAll('.field input, .field textarea').forEach(el => {
+    el.addEventListener('input', () => { el.closest('.field').classList.remove('error'); });
+  });
+})();
+</script>
+</body>
+</html>
