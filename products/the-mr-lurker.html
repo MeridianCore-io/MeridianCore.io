@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>TheMrLurker — MeridianCore.io</title>
-  <meta name="description" content="Automated Twitch session manager. Background drops farming, bonus claiming, and anti-raid routing from a single browser extension popup."/>
+  <title>TheMrLurker &mdash; MeridianCore.io</title>
+  <meta name="description" content="Automated Twitch session manager. Background drops farming, bonus claiming, mod view auto-open, and anti-raid routing from a single browser extension popup."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
@@ -58,6 +58,24 @@
     .prose li { font-size:15px; line-height:1.75; color:rgba(248,248,246,0.65); margin-bottom:6px; }
     .prose li::marker { color:var(--cu); }
 
+    /* Pricing */
+    .pricing-section { background:rgba(193,127,62,0.04); border:1px solid rgba(193,127,62,0.18); border-radius:16px; padding:28px; margin:32px 0; }
+    .pricing-section h3 { font-size:13px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(193,127,62,0.7); margin-bottom:20px; }
+    .pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:20px; }
+    .price-card { background:rgba(13,17,23,0.6); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:18px; }
+    .price-card.featured { border-color:rgba(193,127,62,0.35); background:rgba(193,127,62,0.07); }
+    .price-tier { font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(193,127,62,0.65); margin-bottom:8px; }
+    .price-amount { font-size:26px; font-weight:800; color:var(--white); line-height:1; margin-bottom:4px; }
+    .price-cycle { font-size:12px; color:rgba(248,248,246,0.35); margin-bottom:10px; }
+    .price-desc { font-size:12px; line-height:1.55; color:rgba(248,248,246,0.55); }
+    .pricing-note { font-size:13px; color:rgba(248,248,246,0.5); line-height:1.65; margin-top:4px; }
+    .pricing-note a { color:var(--cu); text-decoration:none; }
+    .pricing-note a:hover { text-decoration:underline; }
+
+    /* Install buttons */
+    .install-row { display:flex; gap:12px; flex-wrap:wrap; margin:20px 0; }
+    .btn-install { display:inline-flex; align-items:center; gap:8px; padding:11px 20px; border-radius:100px; font-size:13px; font-weight:600; text-decoration:none; border:1px solid var(--border); color:rgba(248,248,246,0.3); cursor:not-allowed; }
+
     /* Sidebar */
     .sidebar { display:flex; flex-direction:column; gap:24px; position:sticky; top:100px; }
     .sidebar-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; }
@@ -78,7 +96,7 @@
     .mock-dot { width:10px; height:10px; border-radius:50%; }
     .mock-title { font-size:11px; color:rgba(248,248,246,0.4); margin-left:8px; letter-spacing:.04em; }
     .mockup-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); }
-    .mtab { flex:1; text-align:center; padding:10px 8px; font-size:11px; font-weight:600; color:rgba(248,248,246,0.4); cursor:default; letter-spacing:.06em; text-transform:uppercase; }
+    .mtab { flex:1; text-align:center; padding:10px 6px; font-size:10px; font-weight:600; color:rgba(248,248,246,0.4); cursor:default; letter-spacing:.04em; text-transform:uppercase; }
     .mtab.active { color:var(--cu); border-bottom:2px solid var(--cu); background:rgba(193,127,62,0.05); }
     .mockup-body { padding:20px; }
     .mock-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:13px; }
@@ -86,6 +104,11 @@
     .mock-val { color:var(--white); font-weight:600; }
     .mock-val.green { color:#22C55E; }
     .mock-val.cu { color:var(--cu); }
+
+    /* Privacy */
+    .privacy-block { margin-top:64px; padding-top:48px; border-top:1px solid var(--border); }
+    .privacy-block h2 { font-size:18px !important; margin-bottom:12px !important; }
+    .privacy-block p { font-size:13px !important; color:rgba(248,248,246,0.4) !important; line-height:1.7; }
 
     /* Footer */
     .proj-footer { padding:48px 0; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
@@ -113,9 +136,9 @@
         <div class="proj-status">Active</div>
       </div>
       <h1 class="proj-title">TheMr<em>Lurker</em></h1>
-      <p class="proj-sub">Automated Twitch session manager built for background efficiency. Drops farming, bonus claiming, anti-raid routing, and quality control &mdash; running silently while you do everything else.</p>
+      <p class="proj-sub">Automated Twitch session manager built for background efficiency. Drops farming, bonus claiming, mod view auto-open, anti-raid routing, and quality control &mdash; running silently while you do everything else.</p>
       <div class="proj-actions">
-        <a href="#" class="btn btn-disabled">Coming to Chrome Web Store</a>
+        <a href="#" class="btn btn-disabled">Add to Chrome &mdash; Coming Soon</a>
         <a href="#features" class="btn btn-ghost">See Features</a>
       </div>
     </div>
@@ -123,9 +146,10 @@
 
   <div class="container">
     <div class="stat-bar">
-      <div class="stat-item"><div class="stat-val">v5.5</div><div class="stat-lbl">Current Version</div></div>
-      <div class="stat-item"><div class="stat-val">4</div><div class="stat-lbl">Popup Tabs</div></div>
+      <div class="stat-item"><div class="stat-val">v6.4</div><div class="stat-lbl">Current Version</div></div>
+      <div class="stat-item"><div class="stat-val">5</div><div class="stat-lbl">Popup Tabs</div></div>
       <div class="stat-item"><div class="stat-val">3</div><div class="stat-lbl">Browsers Supported</div></div>
+      <div class="stat-item"><div class="stat-val">30</div><div class="stat-lbl">Day Free Trial</div></div>
       <div class="stat-item"><div class="stat-val">0</div><div class="stat-lbl">Cloud Dependencies</div></div>
     </div>
   </div>
@@ -134,12 +158,51 @@
     <div class="container">
       <div class="content-grid">
         <div class="prose">
+
           <h2>What it does</h2>
-          <p>TheMrLurker runs in the background of Chrome, Edge, or Firefox as a Manifest V3 extension. Open the popup, point it at a channel or campaign list, and it handles the session from there &mdash; no babysitting required.</p>
+          <p>TheMrLurker v6.4 runs in the background of Chrome, Edge, or Firefox as a Manifest V3 extension. Open the popup, point it at a channel or campaign list, and it handles the session from there &mdash; no babysitting required.</p>
           <p>The core use case is Twitch Drops: staying connected to streams long enough to claim time-based rewards. TheMrLurker manages that connection automatically, handles the claim step when drops complete, and moves to the next campaign in your queue without intervention.</p>
 
+          <h2>Free Trial &amp; Pricing</h2>
+          <div class="pricing-section">
+            <h3>Plans</h3>
+            <div class="pricing-grid">
+              <div class="price-card">
+                <div class="price-tier">Free Trial</div>
+                <div class="price-amount">$0</div>
+                <div class="price-cycle">30 days</div>
+                <div class="price-desc">Full access to all features. Activate from the &#9881; Settings tab &mdash; no account required.</div>
+              </div>
+              <div class="price-card featured">
+                <div class="price-tier">Lifetime</div>
+                <div class="price-amount">$4.99</div>
+                <div class="price-cycle">one-time</div>
+                <div class="price-desc">Unlocks Session Limit and Drop Campaign permanently. Pay once, use forever.</div>
+              </div>
+              <div class="price-card">
+                <div class="price-tier">Annual</div>
+                <div class="price-amount">$1.99</div>
+                <div class="price-cycle">per year</div>
+                <div class="price-desc">Same premium features. Renews yearly. Cancel any time.</div>
+              </div>
+            </div>
+            <p class="pricing-note">License keys are delivered by email instantly after purchase. Enter your key in the &#9881; Settings tab to activate. &nbsp;|&nbsp; Support the project: <a href="https://ko-fi.com/meridiancoreio" target="_blank">ko-fi.com/meridiancoreio</a> &nbsp;|&nbsp; <span style="opacity:.5">Purchase link: coming soon (Lemon Squeezy)</span></p>
+          </div>
+
+          <h2>Install</h2>
+          <p>Store listings are pending review. Links will activate when live.</p>
+          <div class="install-row">
+            <span class="btn-install">Add to Chrome &mdash; Pending</span>
+            <span class="btn-install">Add to Firefox &mdash; Pending</span>
+            <span class="btn-install">Add to Edge &mdash; Pending</span>
+          </div>
+
           <h2>Session Management</h2>
-          <p>Sessions are time-bounded and configurable. Set a per-session limit, define a squad (list of favorite channels to prefer), and the extension handles rotation when streams go offline or raids redirect you somewhere you didn&rsquo;t ask to go. Anti-raid routing keeps you on the channels you chose, not wherever the streamer decided to send their audience.</p>
+          <p>Sessions are time-bounded and configurable. Define a squad (list of favorite channels to prefer), and the extension handles rotation when streams go offline or raids redirect you somewhere you didn&rsquo;t ask to go. Anti-raid routing keeps you on the channels you chose, not wherever the streamer decided to send their audience.</p>
+          <p>A per-session time limit (premium feature) can be set to automatically stop lurking after a defined number of hours.</p>
+
+          <h2>Mod View Support</h2>
+          <p>TheMrLurker v6.4 passively detects channels where you are a moderator by reading the page DOM &mdash; no setup required. When you launch a squad channel you moderate, the extension automatically opens mod view instead of regular view. A <strong>MOD</strong> badge on squad entries marks confirmed mod channels.</p>
 
           <h2>Popup Interface</h2>
           <div class="mockup">
@@ -147,37 +210,54 @@
               <div class="mock-dot" style="background:#ef4444;opacity:.5"></div>
               <div class="mock-dot" style="background:#eab308;opacity:.5"></div>
               <div class="mock-dot" style="background:#22c55e;opacity:.5"></div>
-              <span class="mock-title">TheMrLurker v5.5</span>
+              <span class="mock-title">TheMrLurker v6.4</span>
             </div>
             <div class="mockup-tabs">
-              <div class="mtab active">Current</div>
               <div class="mtab">Dashboard</div>
-              <div class="mtab">Stats</div>
+              <div class="mtab active">Current</div>
               <div class="mtab">Drops</div>
+              <div class="mtab">Stats</div>
+              <div class="mtab">&#9881;</div>
             </div>
             <div class="mockup-body">
-              <div class="mock-row"><span class="mock-key">Channel</span><span class="mock-val green">● live_stream_example</span></div>
+              <div class="mock-row"><span class="mock-key">Channel</span><span class="mock-val green">&#9679; live_stream_example</span></div>
               <div class="mock-row"><span class="mock-key">Session Time</span><span class="mock-val">01:42:18</span></div>
-              <div class="mock-row"><span class="mock-key">Quality</span><span class="mock-val">160p (auto)</span></div>
+              <div class="mock-row"><span class="mock-key">Quality</span><span class="mock-val">360p (auto)</span></div>
               <div class="mock-row"><span class="mock-key">Drops Progress</span><span class="mock-val cu">68%</span></div>
               <div class="mock-row"><span class="mock-key">Anti-Raid</span><span class="mock-val green">Active</span></div>
               <div class="mock-row" style="border:none"><span class="mock-key">Next in Queue</span><span class="mock-val" style="color:rgba(248,248,246,0.4)">2 campaigns</span></div>
             </div>
           </div>
-          <p>The <strong>Current</strong> tab shows active session state. <strong>Dashboard</strong> manages your squad list and campaign queue. <strong>Stats</strong> tracks historical drop claims and session hours. The <strong>Drops</strong> tab browses active campaigns directly via the Twitch GQL API &mdash; no external site required.</p>
+          <p>The <strong>Current</strong> tab shows active session state. <strong>Dashboard</strong> manages your squad list and campaign queue. <strong>Stats</strong> tracks historical drop claims and session hours. The <strong>Drops</strong> tab manages your drop rotation queue &mdash; the Drop Campaign button lets you paste any Twitch drops page URL to automatically extract participating streamers and add them to your queue; the extension handles rotation and timing from there. The <strong>&#9881;</strong> Settings tab controls trial activation, license key entry, session limits, and quality preferences.</p>
 
           <h2>Quality Control</h2>
-          <p>Stream quality is auto-set to the lowest available option (typically 160p). You&rsquo;re not watching the stream &mdash; you&rsquo;re farming drops. Reducing quality reduces bandwidth consumption for a session that may run for hours. This is configurable if you want to set a minimum quality floor.</p>
+          <p>Stream quality is auto-set to 360p or lower &mdash; the extension targets 360p specifically, with fallback to lower resolution if unavailable. You&rsquo;re not watching the stream; you&rsquo;re farming drops. Reducing quality reduces bandwidth consumption for sessions that may run for hours. This is configurable if you want to set a different quality floor.</p>
+
+          <h2>Browser Support</h2>
+          <ul>
+            <li><strong>Chrome</strong> &mdash; Manifest V3</li>
+            <li><strong>Microsoft Edge</strong> &mdash; Manifest V3</li>
+            <li><strong>Firefox</strong> &mdash; Manifest V3, minimum version 109</li>
+          </ul>
 
           <h2>Technical Notes</h2>
-          <p>Built entirely in vanilla JavaScript with no build system, no bundler, and no external runtime dependencies. The extension communicates with Twitch&rsquo;s GQL API directly for campaign data. All session state is stored locally in the browser&rsquo;s extension storage &mdash; nothing leaves your machine.</p>
-          <p>Manifest V3 compliance means the extension uses a service worker background script rather than a persistent background page, in line with current Chrome Web Store requirements.</p>
+          <p>Built entirely in vanilla JavaScript with no build system, no bundler, and no external runtime dependencies. All session state is stored locally in the browser&rsquo;s extension storage &mdash; nothing leaves your machine.</p>
+          <p>Manifest V3 compliance means the extension uses a service worker background script rather than a persistent background page, in line with current Chrome Web Store and Firefox AMO requirements.</p>
+
+          <div class="privacy-block">
+            <h2>Privacy Policy</h2>
+            <p><span style="color:rgba(248,248,246,0.3)">Last updated: May 2026.</span> TheMrLurker does not collect, transmit, or sell any personal data. Your squad list, settings, statistics, and license state are stored locally on your device using browser extension storage. They never leave your device.</p>
+            <p>When you use the Drop Campaign feature, the extension fetches the URL you provide to extract channel names &mdash; this request goes directly from your browser to that URL; nothing is logged by us.</p>
+            <p><span style="color:rgba(248,248,246,0.5);font-weight:600;">Permissions used:</span> storage (local data only) &mdash; tabs (open and manage Twitch tabs) &mdash; scripting (automate the Twitch video player) &mdash; activeTab (detect current tab URL) &mdash; downloads (export squad backup) &mdash; optional host permissions (fetch drop campaign pages you explicitly request).</p>
+            <p>Contact: <a href="https://ko-fi.com/meridiancoreio" style="color:var(--cu);text-decoration:none;" target="_blank">ko-fi.com/meridiancoreio</a></p>
+          </div>
+
         </div>
 
         <aside class="sidebar">
           <div class="version-badge sidebar-card">
-            <div class="v">v5.5</div>
-            <div class="vl">HANDOFF-MLK-001 complete</div>
+            <div class="v">v6.4</div>
+            <div class="vl">Current release</div>
           </div>
 
           <div class="sidebar-card">
@@ -185,7 +265,6 @@
             <div class="tech-list">
               <div class="tech-item"><div class="tech-dot"></div>Vanilla JavaScript (ES2020+)</div>
               <div class="tech-item"><div class="tech-dot"></div>Manifest V3 / Service Worker</div>
-              <div class="tech-item"><div class="tech-dot"></div>Twitch GQL API</div>
               <div class="tech-item"><div class="tech-dot"></div>Chrome Storage API</div>
               <div class="tech-item"><div class="tech-dot"></div>No build system</div>
             </div>
@@ -194,9 +273,9 @@
           <div class="sidebar-card">
             <h4>Browsers</h4>
             <div class="tech-list">
-              <div class="tech-item"><div class="tech-dot"></div>Chrome</div>
-              <div class="tech-item"><div class="tech-dot"></div>Microsoft Edge</div>
-              <div class="tech-item"><div class="tech-dot"></div>Firefox</div>
+              <div class="tech-item"><div class="tech-dot"></div>Chrome (MV3)</div>
+              <div class="tech-item"><div class="tech-dot"></div>Edge (MV3)</div>
+              <div class="tech-item"><div class="tech-dot"></div>Firefox (MV3, v109+)</div>
             </div>
           </div>
 
@@ -206,11 +285,13 @@
               <div class="feature-item"><span class="feature-check">&#10003;</span> Background drops farming</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Automatic bonus claiming</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Anti-raid routing</div>
-              <div class="feature-item"><span class="feature-check">&#10003;</span> Quality auto-set (160p)</div>
-              <div class="feature-item"><span class="feature-check">&#10003;</span> Session timeout limits</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Quality auto-set (360p)</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Session time limit (premium)</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Squad / favorites list</div>
-              <div class="feature-item"><span class="feature-check">&#10003;</span> Campaign queue browser</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Drop Campaign queue</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Mod view auto-open</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Historical stats tracking</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> 30-day free trial</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> No cloud dependency</div>
             </div>
           </div>
@@ -223,10 +304,10 @@
 <footer>
   <div class="container">
     <div class="proj-footer">
-      <a href="../index.html">&#8592; MeridianCore.io</a>
+      <a href="../index.html">&larr; MeridianCore.io</a>
       <div class="pf-nav">
-        <a href="keyspeak.html">KeySpeak &#8594;</a>
-        <a href="waymark.html">Waymark &#8594;</a>
+        <a href="keyspeak.html">KeySpeak &rarr;</a>
+        <a href="waymark.html">Waymark &rarr;</a>
       </div>
     </div>
   </div>
@@ -244,7 +325,7 @@ gsap.timeline({ delay:.1 })
   .to('.proj-actions', { opacity:1, y:0, duration:.5, ease:'power2.out' }, '-=.3')
   .to('.stat-bar',     { opacity:1, y:0, duration:.5, ease:'power2.out' }, '-=.25');
 
-gsap.utils.toArray('.sidebar-card, .mockup, .prose h2').forEach((el,i)=>{
+gsap.utils.toArray('.sidebar-card, .mockup, .prose h2, .pricing-section').forEach((el,i)=>{
   gsap.from(el,{
     scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none none' },
     opacity:0, y:20, duration:.6, delay:i*.03, ease:'power2.out'
