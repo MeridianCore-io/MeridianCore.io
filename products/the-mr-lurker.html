@@ -12,6 +12,7 @@
     :root {
       --cu: #C17F3E; --sv: #C0C0C0; --bg: #0d1117; --white: #F8F8F6;
       --card: rgba(255,255,255,0.025); --border: rgba(255,255,255,0.07);
+      --accent: #9146FF;
     }
     html { scroll-behavior:smooth; }
     body { background:var(--bg); color:var(--white); font-family:'Space Grotesk',sans-serif; line-height:1.6; }
@@ -90,20 +91,32 @@
     .version-badge .v { font-size:36px; font-weight:800; color:var(--cu); }
     .version-badge .vl { font-size:12px; color:rgba(248,248,246,0.4); margin-top:4px; }
 
-    /* Tab UI mockup */
-    .mockup { background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin:32px 0; }
-    .mockup-bar { background:rgba(255,255,255,0.04); padding:10px 16px; display:flex; gap:8px; align-items:center; border-bottom:1px solid var(--border); }
+    /* --- Popup Mockup --- */
+    .mockup { background:rgba(12,12,14,0.95); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden; margin:32px 0; width:340px; max-width:100%; box-shadow:0 16px 48px rgba(0,0,0,0.5); }
+    .mockup-bar { background:rgba(24,24,27,0.9); padding:10px 14px; display:flex; gap:8px; align-items:center; border-bottom:1px solid rgba(255,255,255,0.06); }
     .mock-dot { width:10px; height:10px; border-radius:50%; }
-    .mock-title { font-size:11px; color:rgba(248,248,246,0.4); margin-left:8px; letter-spacing:.04em; }
-    .mockup-tabs { display:flex; gap:0; border-bottom:1px solid var(--border); }
-    .mtab { flex:1; text-align:center; padding:10px 6px; font-size:10px; font-weight:600; color:rgba(248,248,246,0.4); cursor:default; letter-spacing:.04em; text-transform:uppercase; }
-    .mtab.active { color:var(--cu); border-bottom:2px solid var(--cu); background:rgba(193,127,62,0.05); }
-    .mockup-body { padding:20px; }
-    .mock-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:13px; }
-    .mock-key { color:rgba(248,248,246,0.4); }
-    .mock-val { color:var(--white); font-weight:600; }
-    .mock-val.green { color:#22C55E; }
-    .mock-val.cu { color:var(--cu); }
+    .mock-title { font-size:10px; color:rgba(248,248,246,0.35); margin-left:6px; letter-spacing:.04em; font-family:monospace; }
+    /* Real tab bar style — pill with dark bg */
+    .mockup-tabs { display:flex; gap:3px; padding:4px; background:#18181b; border-bottom:1px solid rgba(255,255,255,0.06); }
+    .mtab { flex:1; text-align:center; padding:8px 4px; font-size:10px; font-weight:600; color:rgba(173,173,184,0.8); cursor:default; letter-spacing:.02em; border-radius:6px; transition:all .2s; }
+    .mtab.active { color:#efeff1; background:rgba(255,255,255,0.07); border-bottom:2px solid #9146FF; }
+    /* Current tab body */
+    .mockup-body { padding:16px; font-family:'Inter',system-ui,sans-serif; }
+    .mock-ctrl-title { font-size:14px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:8px; color:#efeff1; }
+    .mock-ctrl-title::before { content:''; display:block; width:3px; height:16px; background:#9146FF; border-radius:2px; flex-shrink:0; }
+    .mock-section-lbl { font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:rgba(173,173,184,0.6); margin-bottom:8px; }
+    .mock-tcard { background:rgba(24,24,27,0.6); border:1px solid rgba(255,255,255,0.07); border-radius:10px; padding:2px 12px; margin-bottom:12px; }
+    .mock-trow { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:11px; color:rgba(239,239,241,0.85); }
+    .mock-trow:last-child { border-bottom:none; }
+    .mock-tlbl { flex:1; }
+    .mock-num { display:inline-block; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); border-radius:3px; padding:1px 5px; font-size:10px; margin:0 4px; color:#efeff1; }
+    .mock-hrs { font-size:9px; color:rgba(173,173,184,0.5); margin-left:2px; }
+    .mock-tog { display:inline-block; width:30px; height:17px; border-radius:9px; background:#3d3d42; flex-shrink:0; position:relative; vertical-align:middle; }
+    .mock-tog::after { content:''; position:absolute; width:11px; height:11px; border-radius:50%; background:white; top:3px; left:3px; box-shadow:0 1px 3px rgba(0,0,0,0.4); transition:.2s; }
+    .mock-tog.on { background:#9146FF; }
+    .mock-tog.on::after { left:16px; }
+    .mock-lurk-btn { margin-top:2px; background:linear-gradient(135deg,#9146FF,#772ce8); color:white; text-align:center; padding:11px; border-radius:8px; font-size:12px; font-weight:700; letter-spacing:.02em; box-shadow:0 0 16px rgba(145,70,255,0.25); }
+    .mock-status-txt { text-align:center; font-size:11px; color:rgba(173,173,184,0.4); margin-top:10px; }
 
     /* Privacy */
     .privacy-block { margin-top:64px; padding-top:48px; border-top:1px solid var(--border); }
@@ -160,8 +173,8 @@
         <div class="prose">
 
           <h2>What it does</h2>
-          <p>TheMrLurker v6.4 runs in the background of Chrome, Edge, or Firefox as a Manifest V3 extension. Open the popup, point it at a channel or campaign list, and it handles the session from there &mdash; no babysitting required.</p>
-          <p>The core use case is Twitch Drops: staying connected to streams long enough to claim time-based rewards. TheMrLurker manages that connection automatically, handles the claim step when drops complete, and moves to the next campaign in your queue without intervention.</p>
+          <p>TheMrLurker v6.4 runs in the background of Chrome, Edge, or Firefox as a Manifest V3 extension. Open the popup, configure your toggles, point it at a channel or campaign queue, and it handles the session from there &mdash; no babysitting required.</p>
+          <p>The core use case is Twitch Drops: staying connected to streams long enough to claim time-based rewards. TheMrLurker manages that connection automatically, handles the claim step when drops complete, and moves to the next channel in your queue without intervention.</p>
 
           <h2>Free Trial &amp; Pricing</h2>
           <div class="pricing-section">
@@ -207,9 +220,9 @@
           <h2>Popup Interface</h2>
           <div class="mockup">
             <div class="mockup-bar">
-              <div class="mock-dot" style="background:#ef4444;opacity:.5"></div>
-              <div class="mock-dot" style="background:#eab308;opacity:.5"></div>
-              <div class="mock-dot" style="background:#22c55e;opacity:.5"></div>
+              <div class="mock-dot" style="background:#ef4444;opacity:.6"></div>
+              <div class="mock-dot" style="background:#eab308;opacity:.6"></div>
+              <div class="mock-dot" style="background:#22c55e;opacity:.6"></div>
               <span class="mock-title">TheMrLurker v6.4</span>
             </div>
             <div class="mockup-tabs">
@@ -220,18 +233,38 @@
               <div class="mtab">&#9881;</div>
             </div>
             <div class="mockup-body">
-              <div class="mock-row"><span class="mock-key">Channel</span><span class="mock-val green">&#9679; live_stream_example</span></div>
-              <div class="mock-row"><span class="mock-key">Session Time</span><span class="mock-val">01:42:18</span></div>
-              <div class="mock-row"><span class="mock-key">Quality</span><span class="mock-val">360p (auto)</span></div>
-              <div class="mock-row"><span class="mock-key">Drops Progress</span><span class="mock-val cu">68%</span></div>
-              <div class="mock-row"><span class="mock-key">Anti-Raid</span><span class="mock-val green">Active</span></div>
-              <div class="mock-row" style="border:none"><span class="mock-key">Next in Queue</span><span class="mock-val" style="color:rgba(248,248,246,0.4)">2 campaigns</span></div>
+              <div class="mock-ctrl-title">TheMrLurker Control</div>
+              <div class="mock-section-lbl">Tab Utilities</div>
+              <div class="mock-tcard">
+                <div class="mock-trow">
+                  <span class="mock-tlbl">Auto-Claim Points</span>
+                  <span class="mock-tog on"></span>
+                </div>
+                <div class="mock-trow">
+                  <span class="mock-tlbl">Force 360p (Save CPU)</span>
+                  <span class="mock-tog on"></span>
+                </div>
+                <div class="mock-trow">
+                  <span class="mock-tlbl">Mute Browser Tab</span>
+                  <span class="mock-tog on"></span>
+                </div>
+                <div class="mock-trow">
+                  <span class="mock-tlbl">Anti-Raid (Stay on Channel)</span>
+                  <span class="mock-tog"></span>
+                </div>
+                <div class="mock-trow">
+                  <span class="mock-tlbl">Session Limit<span class="mock-num">4</span><span class="mock-hrs">hrs (off = unlimited)</span></span>
+                  <span class="mock-tog"></span>
+                </div>
+              </div>
+              <div class="mock-lurk-btn">Lurk Mode Activate</div>
+              <div class="mock-status-txt">Ready</div>
             </div>
           </div>
-          <p>The <strong>Current</strong> tab shows active session state. <strong>Dashboard</strong> manages your squad list and campaign queue. <strong>Stats</strong> tracks historical drop claims and session hours. The <strong>Drops</strong> tab manages your drop rotation queue &mdash; the Drop Campaign button lets you paste any Twitch drops page URL to automatically extract participating streamers and add them to your queue; the extension handles rotation and timing from there. The <strong>&#9881;</strong> Settings tab controls trial activation, license key entry, session limits, and quality preferences.</p>
+          <p>The <strong>Current</strong> tab is the control panel. Toggle Auto-Claim Points, Force 360p, Mute Browser Tab, Anti-Raid, and the per-session time limit (premium) on or off, then hit <strong>Lurk Mode Activate</strong> to start. <strong>Dashboard</strong> shows your squad &mdash; channel cards with live/offline status, drag-to-reorder, and Export/Import backup. <strong>Stats</strong> tracks Live Lurk Time, Wiggles (channel point bounces), and Points Farmed across sessions. The <strong>Drops</strong> (Drops Carousel) tab runs a separate rotation queue &mdash; set a rotation timer, use the <strong>Drop Campaign</strong> button to paste any Twitch drops page URL and automatically extract participating channels, then hit Start Rotation. The <strong>&#9881;</strong> Settings tab handles trial activation, license key entry, and the Ko-fi support link.</p>
 
           <h2>Quality Control</h2>
-          <p>Stream quality is auto-set to 360p or lower &mdash; the extension targets 360p specifically, with fallback to lower resolution if unavailable. You&rsquo;re not watching the stream; you&rsquo;re farming drops. Reducing quality reduces bandwidth consumption for sessions that may run for hours. This is configurable if you want to set a different quality floor.</p>
+          <p>Stream quality is auto-set to 360p or lower &mdash; the extension targets 360p specifically, with fallback to lower resolution if unavailable. The <strong>Force 360p (Save CPU)</strong> toggle handles this automatically. You&rsquo;re not watching the stream; you&rsquo;re farming drops. Reducing quality reduces bandwidth and CPU consumption for sessions that may run for hours.</p>
 
           <h2>Browser Support</h2>
           <ul>
@@ -283,14 +316,14 @@
             <h4>Features</h4>
             <div class="feature-list">
               <div class="feature-item"><span class="feature-check">&#10003;</span> Background drops farming</div>
-              <div class="feature-item"><span class="feature-check">&#10003;</span> Automatic bonus claiming</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Auto-Claim Points toggle</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Anti-raid routing</div>
-              <div class="feature-item"><span class="feature-check">&#10003;</span> Quality auto-set (360p)</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Force 360p (Save CPU)</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Session time limit (premium)</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Squad / favorites list</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Drop Campaign queue</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> Mod view auto-open</div>
-              <div class="feature-item"><span class="feature-check">&#10003;</span> Historical stats tracking</div>
+              <div class="feature-item"><span class="feature-check">&#10003;</span> Wiggles + Points Farmed stats</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> 30-day free trial</div>
               <div class="feature-item"><span class="feature-check">&#10003;</span> No cloud dependency</div>
             </div>
