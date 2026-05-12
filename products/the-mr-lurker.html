@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -96,7 +96,7 @@
     .mockup-bar { background:rgba(24,24,27,0.9); padding:10px 14px; display:flex; gap:8px; align-items:center; border-bottom:1px solid rgba(255,255,255,0.06); }
     .mock-dot { width:10px; height:10px; border-radius:50%; }
     .mock-title { font-size:10px; color:rgba(248,248,246,0.35); margin-left:6px; letter-spacing:.04em; font-family:monospace; }
-    /* Real tab bar style — pill with dark bg */
+    /* Real tab bar style â€” pill with dark bg */
     .mockup-tabs { display:flex; gap:3px; padding:4px; background:#18181b; border-bottom:1px solid rgba(255,255,255,0.06); }
     .mtab { flex:1; text-align:center; padding:8px 4px; font-size:10px; font-weight:600; color:rgba(173,173,184,0.8); cursor:default; letter-spacing:.02em; border-radius:6px; transition:all .2s; }
     .mtab.active { color:#efeff1; background:rgba(255,255,255,0.07); border-bottom:2px solid #9146FF; }
@@ -174,6 +174,7 @@
 
           <h2>What it does</h2>
           <p>TheMrLurker v6.4 runs in the background of Chrome, Edge, or Firefox as a Manifest V3 extension. Open the popup, configure your toggles, point it at a channel or campaign queue, and it handles the session from there &mdash; no babysitting required.</p>
+          <p>TheMrLurker keeps you counted as a viewer &mdash; Twitch counts you as long as you have one or two tabs open, and the extension handles everything from there.</p>
           <p>The core use case is Twitch Drops: staying connected to streams long enough to claim time-based rewards. TheMrLurker manages that connection automatically, handles the claim step when drops complete, and moves to the next channel in your queue without intervention.</p>
 
           <h2>Free Trial &amp; Pricing</h2>
@@ -215,7 +216,7 @@
           <p>A per-session time limit (premium feature) can be set to automatically stop lurking after a defined number of hours.</p>
 
           <h2>Mod View Support</h2>
-          <p>TheMrLurker v6.4 passively detects channels where you are a moderator by reading the page DOM &mdash; no setup required. When you launch a squad channel you moderate, the extension automatically opens mod view instead of regular view. A <strong>MOD</strong> badge on squad entries marks confirmed mod channels.</p>
+          <p>TheMrLurker v6.4 passively detects channels where you are a moderator &mdash; no setup required. When you launch a squad channel you moderate, the extension automatically opens mod view instead of regular view. A <strong>MOD</strong> badge on squad entries marks confirmed mod channels.</p>
 
           <h2>Popup Interface</h2>
           <div class="mockup">
@@ -261,7 +262,7 @@
               <div class="mock-status-txt">Ready</div>
             </div>
           </div>
-          <p>The <strong>Current</strong> tab is the control panel. Toggle Auto-Claim Points, Force 360p, Mute Browser Tab, Anti-Raid, and the per-session time limit (premium) on or off, then hit <strong>Lurk Mode Activate</strong> to start. <strong>Dashboard</strong> shows your squad &mdash; channel cards with live/offline status, drag-to-reorder, and Export/Import backup. <strong>Stats</strong> tracks Live Lurk Time, Wiggles (channel point bounces), and Points Farmed across sessions. The <strong>Drops</strong> (Drops Carousel) tab runs a separate rotation queue &mdash; set a rotation timer, use the <strong>Drop Campaign</strong> button to paste any Twitch drops page URL and automatically extract participating channels, then hit Start Rotation. The <strong>&#9881;</strong> Settings tab handles trial activation, license key entry, and the Ko-fi support link.</p>
+          <p>The <strong>Current</strong> tab is the control panel. Toggle Auto-Claim Points, Force 360p, Mute Browser Tab, Anti-Raid, and the per-session time limit (premium) on or off, then hit <strong>Lurk Mode Activate</strong> to start. <strong>Dashboard</strong> shows your squad &mdash; channel cards with live/offline status, drag-to-reorder, and Export/Import backup. <strong>Stats</strong> tracks Live Lurk Time, Wiggles, and Points Farmed across sessions. The <strong>Drops</strong> (Drops Carousel) tab runs a separate rotation queue &mdash; set a rotation timer, use the <strong>Drop Campaign</strong> button to paste any Twitch drops page URL and automatically extract participating channels, then hit Start Rotation. The <strong>&#9881;</strong> Settings tab handles trial activation, license key entry, and the Ko-fi support link.</p>
 
           <h2>Quality Control</h2>
           <p>Stream quality is auto-set to 360p or lower &mdash; the extension targets 360p specifically, with fallback to lower resolution if unavailable. The <strong>Force 360p (Save CPU)</strong> toggle handles this automatically. You&rsquo;re not watching the stream; you&rsquo;re farming drops. Reducing quality reduces bandwidth and CPU consumption for sessions that may run for hours.</p>
@@ -367,3 +368,4 @@ gsap.utils.toArray('.sidebar-card, .mockup, .prose h2, .pricing-section').forEac
 </script>
 </body>
 </html>
+
