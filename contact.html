@@ -360,16 +360,6 @@
 
     if (!valid) return;
 
-    // Check if access key is still placeholder
-    const accessKey = form.querySelector('[name="access_key"]').value;
-    if (accessKey === 'acf464ea-b7fb-46ad-b754-f7507c1354c0') {
-      // Fallback: open mailto
-      const subject = encodeURIComponent(document.getElementById('subject').value || 'Message from meridiancore.io');
-      const body = encodeURIComponent(msg + '\n\nFrom: ' + name + '\nEmail: ' + email);
-      window.location.href = 'mailto:info@meridiancore.io?subject=' + subject + '&body=' + body;
-      return;
-    }
-
     btn.disabled = true;
     btnText.textContent = 'Sending...';
 
